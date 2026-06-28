@@ -1,0 +1,35 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+# Logs and local data
+*.log
+.DS_Store
+Thumbs.db
+.local/
+tmp/
+
+# Secrets and private datasets
+secrets/
+private-data/
+*.pem
+*.key
+*.p12
+*.pfx
