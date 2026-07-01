@@ -1,0 +1,7 @@
+{"timestamp":"2026-06-28T08:11:04Z","source":"vpn","host":"vpn-gw-01","user":"j.nguyen","action":"failed_login","src_ip":"203.0.113.44","message":"Failed login for j.nguyen from 203.0.113.44"}
+{"timestamp":"2026-06-28T08:12:10Z","source":"vpn","host":"vpn-gw-01","user":"j.nguyen","action":"failed_login","src_ip":"203.0.113.44","message":"Failed login for j.nguyen from 203.0.113.44"}
+{"timestamp":"2026-06-28T08:15:42Z","source":"vpn","host":"vpn-gw-01","user":"j.nguyen","action":"successful_login","src_ip":"203.0.113.44","message":"Successful VPN login from new device"}
+{"timestamp":"2026-06-28T08:24:11Z","source":"edr","host":"FIN-WS-044","user":"j.nguyen","action":"suspicious_powershell","message":"powershell.exe -EncodedCommand detected outbound download cradle"}
+{"timestamp":"2026-06-28T08:41:29Z","source":"windows","host":"FIN-FS-01","user":"j.nguyen","action":"lateral_movement","src_ip":"10.20.5.44","dst_ip":"10.20.8.10","message":"SMB admin$ access from FIN-WS-044 to FIN-FS-01"}
+{"timestamp":"2026-06-28T08:52:03Z","source":"zeek","host":"FIN-WS-044","user":"unknown","action":"command_and_control","src_ip":"10.20.5.44","dst_ip":"198.51.100.77","message":"Periodic C2 beacon over HTTPS every 60 seconds"}
+{"timestamp":"2026-06-28T09:03:37Z","source":"edr","host":"FIN-FS-01","user":"j.nguyen","action":"impact","message":"Multiple files encrypted with ransom note observed"}

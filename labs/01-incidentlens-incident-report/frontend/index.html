@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IncidentLens</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">GenAI SOC Lab 01</p>
+        <h1>IncidentLens</h1>
+      </div>
+      <nav>
+        <a href="/docs" target="_blank" rel="noreferrer">API Docs</a>
+        <a href="https://attack.mitre.org/" target="_blank" rel="noreferrer">MITRE ATT&CK</a>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section class="panel intro">
+        <div>
+          <h2>AI-ready incident report assistant for SOC teams</h2>
+          <p>
+            Create an incident from logs, normalize events, build an attack timeline, map
+            observations to MITRE ATT&CK, and generate analyst and executive reports.
+          </p>
+        </div>
+        <form id="login-form" class="login">
+          <label>
+            Analyst
+            <input id="username" value="analyst" autocomplete="username" />
+          </label>
+          <label>
+            Password
+            <input id="password" value="incidentlens-demo" type="password" autocomplete="current-password" />
+          </label>
+        </form>
+      </section>
+
+      <section class="grid">
+        <form id="incident-form" class="panel incident-form">
+          <div class="section-heading">
+            <h2>Incident Intake</h2>
+            <button type="button" id="load-sample">Load Sample</button>
+          </div>
+          <label>
+            Title
+            <input id="title" required value="ACME ransomware intrusion" />
+          </label>
+          <label>
+            Severity
+            <select id="severity">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high" selected>High</option>
+              <option value="critical">Critical</option>
+            </select>
+          </label>
+          <label>
+            Analyst Summary
+            <textarea id="summary" rows="3">Synthetic investigation of suspicious login, PowerShell, lateral movement, C2, and ransomware impact indicators.</textarea>
+          </label>
+          <label>
+            Raw Logs
+            <textarea id="raw_logs" rows="14" spellcheck="false"></textarea>
+          </label>
+          <button type="submit" class="primary">Analyze Incident</button>
+          <p id="status" class="status"></p>
+        </form>
+
+        <section class="panel results">
+          <div class="section-heading">
+            <h2>Analysis Output</h2>
+            <select id="incident-picker" aria-label="Incident picker"></select>
+          </div>
+
+          <div class="metrics">
+            <div><span id="event-count">0</span><small>Events</small></div>
+            <div><span id="mitre-count">0</span><small>MITRE</small></div>
+            <div><span id="severity-label">-</span><small>Severity</small></div>
+          </div>
+
+          <div class="tabs">
+            <button data-tab="timeline" class="active">Timeline</button>
+            <button data-tab="mitre">MITRE</button>
+            <button data-tab="technical">Technical Report</button>
+            <button data-tab="executive">Executive Brief</button>
+          </div>
+
+          <div id="timeline" class="tab-content active"></div>
+          <div id="mitre" class="tab-content"></div>
+          <pre id="technical" class="tab-content report"></pre>
+          <pre id="executive" class="tab-content report"></pre>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

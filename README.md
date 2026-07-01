@@ -7,7 +7,7 @@ Applied Generative AI systems for Security Operations Center workflows and AI cy
 [![License: MIT](https://img.shields.io/badge/License-MIT-0f766e.svg)](LICENSE)
 [![Labs](https://img.shields.io/badge/Labs-29-111827.svg)](#lab-catalog)
 [![Focus](https://img.shields.io/badge/Focus-SOC%20%7C%20Blue%20Team-1d4ed8.svg)](#scope)
-[![Status](https://img.shields.io/badge/Status-Portfolio%20Scaffold-374151.svg)](#roadmap)
+[![Status](https://img.shields.io/badge/Status-Active%20Build-374151.svg)](#roadmap)
 
 [Overview](#overview) · [Lab Catalog](#lab-catalog) · [Architecture](docs/architecture.md) · [Evaluation](docs/evaluation.md) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md)
 
@@ -39,7 +39,7 @@ Core engineering themes:
 
 | # | Lab | Domain | Method | Track |
 |---|---|---|---|---|
-| 01 | [IncidentLens: AI Incident Report Assistant](labs/01-incidentlens-incident-report/) | Incident Response | LLM + RAG | Flagship |
+| 01 | [IncidentLens: AI Incident Report Assistant](labs/01-incidentlens-incident-report/) | Incident Response | FastAPI + deterministic AI-ready analysis | Implemented |
 | 02 | [QueryForge: Natural Language SIEM Assistant](labs/02-queryforge-siem-assistant/) | Threat Hunting | LLM + Text-to-Query | Flagship |
 | 03 | [ThreatPulse: AI Threat Intelligence Briefing](labs/03-threatpulse-threat-intel/) | Threat Intelligence | RAG + LLM | Flagship |
 | 04 | [PhishGuard: Context-Aware Phishing Detection](labs/04-phishguard-phishing-detection/) | Email Security | LLM + Classification | Backlog |

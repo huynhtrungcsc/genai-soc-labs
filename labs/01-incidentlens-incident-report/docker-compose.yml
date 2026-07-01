@@ -1,0 +1,14 @@
+services:
+  incidentlens:
+    build: .
+    ports:
+      - "8001:8001"
+    environment:
+      INCIDENTLENS_DATABASE_PATH: /app/data/incidentlens.db
+      INCIDENTLENS_DEMO_USERNAME: analyst
+      INCIDENTLENS_DEMO_PASSWORD: incidentlens-demo
+    volumes:
+      - incidentlens-data:/app/data
+
+volumes:
+  incidentlens-data:
