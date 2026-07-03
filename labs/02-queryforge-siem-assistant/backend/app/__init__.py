@@ -1,0 +1,1 @@
+"""QueryForge application package."""

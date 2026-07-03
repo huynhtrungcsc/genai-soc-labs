@@ -40,7 +40,7 @@ Core engineering themes:
 | # | Lab | Domain | Method | Track |
 |---|---|---|---|---|
 | 01 | [IncidentLens: AI Incident Report Assistant](labs/01-incidentlens-incident-report/) | Incident Response | FastAPI + deterministic AI-ready analysis | Implemented |
-| 02 | [QueryForge: Natural Language SIEM Assistant](labs/02-queryforge-siem-assistant/) | Threat Hunting | LLM + Text-to-Query | Flagship |
+| 02 | [QueryForge: Natural Language SIEM Assistant](labs/02-queryforge-siem-assistant/) | Threat Hunting | FastAPI + text-to-query engine | Implemented |
 | 03 | [ThreatPulse: AI Threat Intelligence Briefing](labs/03-threatpulse-threat-intel/) | Threat Intelligence | RAG + LLM | Flagship |
 | 04 | [PhishGuard: Context-Aware Phishing Detection](labs/04-phishguard-phishing-detection/) | Email Security | LLM + Classification | Backlog |
 | 05 | [HardeningPilot: CIS/ISO Security Advisor](labs/05-hardeningpilot-compliance-advisor/) | Compliance & Hardening | RAG + LLM | Backlog |
