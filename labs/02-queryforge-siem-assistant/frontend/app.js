@@ -36,10 +36,11 @@ function setStatus(message, isError = false) {
 function renderJob(job) {
   state.job = job;
   $("dialect-label").textContent = job.dialect;
-  $("range-label").textContent = job.time_range;
-  $("row-count").textContent = job.execution?.row_count ?? 0;
+  $("status-label").textContent = job.status;
+  $("risk-label").textContent = job.generated.risk_level;
   $("query").textContent = job.generated.query;
-  $("execute").disabled = false;
+  $("approve").disabled = job.status !== "draft";
+  $("execute").disabled = !["approved", "executed"].includes(job.status);
   renderExplanation(job);
   renderResults(job.execution);
   renderFollowups(job.generated.next_questions);
@@ -67,6 +68,13 @@ function renderExplanation(job) {
     <article class="card">
       <span class="pill">Validation</span>
       <ul>${warnings}</ul>
+    </article>
+    <article class="card">
+      <span class="pill">Governance</span>
+      <p><strong>Risk:</strong> ${escapeHtml(job.generated.risk_level)}</p>
+      <p><strong>Estimated cost:</strong> ${escapeHtml(job.generated.estimated_cost)}</p>
+      <p><strong>Requires review:</strong> ${job.generated.requires_review ? "yes" : "no"}</p>
+      <p><strong>Owner:</strong> ${escapeHtml(job.owner)}</p>
     </article>
   `;
 }
@@ -156,11 +164,33 @@ document.addEventListener("DOMContentLoaded", () => {
           dialect: $("dialect").value,
           time_range: $("time_range").value,
           data_source: $("data_source").value,
+          owner: "soc-hunter",
+          purpose: "threat_hunt",
+          max_rows: 100,
         }),
       });
       renderJob(job);
       await refreshQueries();
       setStatus("Query generated. Review it before execution.");
+    } catch (error) {
+      setStatus(error.message, true);
+    }
+  });
+
+  $("approve").addEventListener("click", async () => {
+    if (!state.job) return;
+    setStatus("Approving query...");
+    try {
+      const job = await api(`/queries/${state.job.id}/approve`, {
+        method: "POST",
+        body: JSON.stringify({
+          approver: $("username").value,
+          note: "Approved from analyst UI after query review.",
+        }),
+      });
+      renderJob(job);
+      await refreshQueries();
+      setStatus("Query approved. It can now be executed.");
     } catch (error) {
       setStatus(error.message, true);
     }

@@ -7,11 +7,18 @@ def generate_reports(incident: Incident) -> ReportBundle:
             f"# Technical Incident Report: {incident.title}",
             "",
             f"- Severity: {incident.severity.upper()}",
+            f"- Status: {incident.status}",
+            f"- Owner: {incident.owner}",
+            f"- Environment: {incident.environment}",
             f"- Events analyzed: {len(incident.events)}",
             f"- MITRE techniques mapped: {len(incident.mitre)}",
+            f"- Risk score: {_risk_line(incident)}",
             "",
             "## Analyst Summary",
             incident.summary or "No analyst summary was provided.",
+            "",
+            "## Business Context",
+            _business_context(incident),
             "",
             "## Timeline",
             *_timeline_lines(incident),
@@ -19,8 +26,11 @@ def generate_reports(incident: Incident) -> ReportBundle:
             "## MITRE ATT&CK Mapping",
             *_mitre_lines(incident),
             "",
+            "## Data Quality",
+            *_quality_lines(incident),
+            "",
             "## Recommended Response",
-            *_recommendations(incident),
+            *_response_task_lines(incident),
             "",
             "## Evidence Handling",
             "Preserve raw logs, endpoint telemetry, account activity, and network indicators. "
@@ -35,6 +45,7 @@ def generate_reports(incident: Incident) -> ReportBundle:
                 f"Current severity is **{incident.severity.upper()}** based on "
                 f"{len(incident.events)} analyzed events."
             ),
+            f"Current risk score is **{_risk_line(incident)}**.",
             "",
             "## What Happened",
             _executive_narrative(incident),
@@ -43,10 +54,7 @@ def generate_reports(incident: Incident) -> ReportBundle:
             _business_risk(incident),
             "",
             "## Immediate Actions",
-            "- Confirm scope and affected systems.",
-            "- Contain suspicious accounts or hosts after analyst approval.",
-            "- Preserve evidence for post-incident review.",
-            "- Communicate status updates using a single incident owner.",
+            *_executive_actions(incident),
         ]
     )
     return ReportBundle(technical=technical, executive=executive)
@@ -111,6 +119,57 @@ def _recommendations(incident: Incident) -> list[str]:
     if "Impact" in tactics:
         recommendations.append("- Start recovery planning and validate backups before restoration.")
     return recommendations
+
+
+def _quality_lines(incident: Incident) -> list[str]:
+    if not incident.data_quality:
+        return ["No data quality issues were identified."]
+    return [
+        f"- {finding.severity.upper()} `{finding.field}`: {finding.message}"
+        for finding in incident.data_quality
+    ]
+
+
+def _response_task_lines(incident: Incident) -> list[str]:
+    if not incident.response_tasks:
+        return _recommendations(incident)
+    return [
+        f"- [{task.status}] {task.title} ({task.owner_role}) - {task.rationale}"
+        for task in incident.response_tasks
+    ]
+
+
+def _executive_actions(incident: Incident) -> list[str]:
+    if not incident.response_tasks:
+        return [
+            "- Confirm scope and affected systems.",
+            "- Contain suspicious accounts or hosts after analyst approval.",
+            "- Preserve evidence for post-incident review.",
+            "- Communicate status updates using a single incident owner.",
+        ]
+    return [f"- {task.title}" for task in incident.response_tasks[:4]]
+
+
+def _risk_line(incident: Incident) -> str:
+    if not incident.risk:
+        return "not assessed"
+    return (
+        f"{incident.risk.score}/100 "
+        f"({incident.risk.level.upper()}, SLA: {incident.risk.recommended_sla})"
+    )
+
+
+def _business_context(incident: Incident) -> str:
+    assets = ", ".join(incident.affected_assets) if incident.affected_assets else "Not declared"
+    impact = incident.business_impact or "Not declared"
+    tags = ", ".join(incident.tags) if incident.tags else "none"
+    return "\n".join(
+        [
+            f"- Affected assets: {assets}",
+            f"- Business impact: {impact}",
+            f"- Tags: {tags}",
+        ]
+    )
 
 
 def _executive_narrative(incident: Incident) -> str:

@@ -25,9 +25,14 @@ This first implementation is deterministic and enterprise-practical: it includes
 
 - Browser UI served by FastAPI
 - HTTP Basic demo authentication
+- API key authentication for service-to-service integration
 - Natural language question intake in Vietnamese or English
 - SPL, Sentinel KQL, and Elastic KQL rendering
 - Query explanation, assumptions, and validation warnings
+- Query governance with draft, approved, and executed states
+- Risk level and estimated SIEM execution cost
+- Approval gate before execution
+- Audit trail for create, approve, and execute actions
 - Suggested follow-up hunts
 - SQLite query history
 - Local execution against synthetic normalized SOC events
@@ -107,20 +112,24 @@ make lint
 1. A hunter asks a question such as: “Trong 24h qua, có máy nào trong phòng kế toán kết nối ra IP lạ ở nước ngoài không?”
 2. QueryForge detects hunt intent, target SIEM dialect, time range, and business context.
 3. It generates a SIEM query and explains every major clause.
-4. It warns when assumptions or cost risks need analyst review.
-5. It executes against synthetic normalized SOC events to demonstrate the full workflow.
-6. It stores query history for reuse and improvement.
+4. It estimates risk/cost and warns when assumptions need analyst review.
+5. A reviewer approves the query before execution.
+6. It executes against synthetic normalized SOC events to demonstrate the full workflow.
+7. It stores query history and audit events for reuse and improvement.
 
 ## API Summary
 
 - `GET /api/health`
+- `GET /api/ready`
 - `GET /api/schema`
 - `GET /api/queries`
 - `POST /api/queries`
 - `GET /api/queries/{job_id}`
+- `POST /api/queries/{job_id}/approve`
 - `POST /api/queries/{job_id}/execute`
+- `GET /api/queries/{job_id}/audit`
 
-All query endpoints require demo hunter credentials.
+All query endpoints require demo hunter credentials or the `X-API-Key` header.
 
 ## Original Brief
 

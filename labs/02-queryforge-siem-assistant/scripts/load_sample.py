@@ -1,6 +1,6 @@
 from app.schemas import QueryRequest
 from app.services.executor import execute_against_sample
-from app.storage.sqlite import attach_execution, create_query_job, init_db
+from app.storage.sqlite import approve_query_job, attach_execution, create_query_job, init_db
 
 
 def main() -> None:
@@ -13,7 +13,8 @@ def main() -> None:
             data_source="security_events",
         )
     )
-    attach_execution(job, execute_against_sample(job))
+    approved = approve_query_job(job, "sample-loader")
+    attach_execution(approved, execute_against_sample(approved))
     print(f"Loaded sample query: {job.id}")
 
 

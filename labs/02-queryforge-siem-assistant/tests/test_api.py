@@ -12,6 +12,10 @@ def _auth() -> dict[str, str]:
     return {"Authorization": f"Basic {token}"}
 
 
+def _api_key() -> dict[str, str]:
+    return {"X-API-Key": "change-me-in-production"}
+
+
 def test_query_workflow() -> None:
     with TestClient(app) as client:
         health = client.get("/api/health")
@@ -33,7 +37,24 @@ def test_query_workflow() -> None:
         assert created.status_code == 201
         job = created.json()
         assert 'country!="VN"' in job["generated"]["query"]
+        assert job["status"] == "draft"
+
+        executed = client.post(f"/api/queries/{job['id']}/execute", headers=_auth())
+        assert executed.status_code == 409
+
+        approved = client.post(
+            f"/api/queries/{job['id']}/approve",
+            headers=_auth(),
+            json={"approver": "soc-lead", "note": "Reviewed in test workflow."},
+        )
+        assert approved.status_code == 200
+        assert approved.json()["status"] == "approved"
 
         executed = client.post(f"/api/queries/{job['id']}/execute", headers=_auth())
         assert executed.status_code == 200
         assert executed.json()["execution"]["row_count"] >= 2
+
+        audit = client.get(f"/api/queries/{job['id']}/audit", headers=_api_key())
+        assert audit.status_code == 200
+        actions = {item["action"] for item in audit.json()}
+        assert {"query.created", "query.approved", "query.executed"} <= actions

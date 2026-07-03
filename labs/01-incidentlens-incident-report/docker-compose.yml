@@ -7,6 +7,7 @@ services:
       INCIDENTLENS_DATABASE_PATH: /app/data/incidentlens.db
       INCIDENTLENS_DEMO_USERNAME: analyst
       INCIDENTLENS_DEMO_PASSWORD: incidentlens-demo
+      INCIDENTLENS_API_KEY: change-me-in-production
     volumes:
       - incidentlens-data:/app/data
 

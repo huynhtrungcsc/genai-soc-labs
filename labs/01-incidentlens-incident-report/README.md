@@ -31,10 +31,15 @@ This first version is deterministic and runs without an external LLM key. That k
 
 - Browser UI served by FastAPI
 - HTTP Basic demo authentication
+- API key authentication for service-to-service integration
 - JSONL and text log parsing
 - SQLite persistence
+- Incident status, owner, business impact, tags, and affected assets
 - Timeline reconstruction by attack phase
 - MITRE ATT&CK rule mapping
+- Evidence quality checks and risk scoring with recommended SLA
+- Human-approved response task planning
+- Audit trail for create, analyze, status change, and report access
 - Technical and executive Markdown reports
 - Synthetic sample incident
 - Pytest coverage for parser, analysis, and API workflow
@@ -114,19 +119,23 @@ make lint
 2. IncidentLens normalizes log lines into events.
 3. Timeline rules group events into SOC investigation phases.
 4. MITRE rules map evidence to ATT&CK techniques.
-5. Reports separate technical detail from executive communication.
+5. Evidence quality checks, risk scoring, and response tasks are generated.
+6. Reports separate technical detail from executive communication.
 
 ## API Summary
 
 - `GET /api/health`
+- `GET /api/ready`
 - `GET /api/incidents`
 - `POST /api/incidents`
 - `GET /api/incidents/{incident_id}`
 - `POST /api/incidents/{incident_id}/analyze`
+- `PATCH /api/incidents/{incident_id}/status`
+- `GET /api/incidents/{incident_id}/audit`
 - `GET /api/incidents/{incident_id}/report/technical`
 - `GET /api/incidents/{incident_id}/report/executive`
 
-All incident endpoints require demo analyst credentials.
+All incident endpoints require demo analyst credentials or the `X-API-Key` header.
 
 ## Original Brief
 
@@ -146,6 +155,7 @@ This implementation starts with FastAPI, SQLite, deterministic analysis, and a s
 - Do not commit real credentials, tokens, customer logs, or incident data.
 - Treat model output as analyst support, not final truth.
 - Keep human approval for containment, account lockout, firewall changes, or other disruptive actions.
+- Preserve audit logs for status changes and report access.
 
 ## Roadmap
 

@@ -2,7 +2,8 @@
 
 Base URL: `http://localhost:8002/api`
 
-All query endpoints use HTTP Basic authentication.
+All query endpoints use HTTP Basic authentication. Service integrations may also use the
+`X-API-Key` header.
 
 Demo credentials:
 
@@ -13,11 +14,14 @@ hunter / queryforge-demo
 ## Endpoints
 
 - `GET /health`
+- `GET /ready`
 - `GET /schema`
 - `GET /queries`
 - `POST /queries`
 - `GET /queries/{job_id}`
+- `POST /queries/{job_id}/approve`
 - `POST /queries/{job_id}/execute`
+- `GET /queries/{job_id}/audit`
 
 Interactive OpenAPI docs are available at `/docs`.
 

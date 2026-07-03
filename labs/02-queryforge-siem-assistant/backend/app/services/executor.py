@@ -29,7 +29,7 @@ def execute_against_sample(job: QueryJob) -> ExecutionResult:
     grouped = _group_rows(matched)
     return ExecutionResult(
         row_count=len(grouped),
-        rows=grouped[:50],
+        rows=grouped[: job.max_rows],
         summary=_summary(matched, grouped),
     )
 

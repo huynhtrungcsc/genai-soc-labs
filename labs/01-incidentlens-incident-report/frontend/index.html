@@ -59,6 +59,18 @@
             </select>
           </label>
           <label>
+            Owner
+            <input id="owner" value="soc-tier1" />
+          </label>
+          <label>
+            Affected Assets
+            <input id="affected_assets" value="FIN-WS-044, FIN-FS-01" />
+          </label>
+          <label>
+            Business Impact
+            <textarea id="business_impact" rows="2">Finance workstation and file server activity may affect accounting operations.</textarea>
+          </label>
+          <label>
             Analyst Summary
             <textarea id="summary" rows="3">Synthetic investigation of suspicious login, PowerShell, lateral movement, C2, and ransomware impact indicators.</textarea>
           </label>
@@ -79,18 +91,20 @@
           <div class="metrics">
             <div><span id="event-count">0</span><small>Events</small></div>
             <div><span id="mitre-count">0</span><small>MITRE</small></div>
-            <div><span id="severity-label">-</span><small>Severity</small></div>
+            <div><span id="risk-label">-</span><small>Risk</small></div>
           </div>
 
           <div class="tabs">
             <button data-tab="timeline" class="active">Timeline</button>
             <button data-tab="mitre">MITRE</button>
+            <button data-tab="risk">Risk & Response</button>
             <button data-tab="technical">Technical Report</button>
             <button data-tab="executive">Executive Brief</button>
           </div>
 
           <div id="timeline" class="tab-content active"></div>
           <div id="mitre" class="tab-content"></div>
+          <div id="risk" class="tab-content"></div>
           <pre id="technical" class="tab-content report"></pre>
           <pre id="executive" class="tab-content report"></pre>
         </section>

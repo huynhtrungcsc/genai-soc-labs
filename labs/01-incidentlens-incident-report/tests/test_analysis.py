@@ -32,6 +32,10 @@ def test_analysis_builds_timeline_mitre_and_reports() -> None:
         "Impact",
     }
     assert {item.technique_id for item in analyzed.mitre} >= {"T1110", "T1059.001", "T1486"}
+    assert analyzed.risk is not None
+    assert analyzed.risk.score >= 65
+    assert analyzed.response_tasks
     assert analyzed.reports is not None
     assert "Technical Incident Report" in analyzed.reports.technical
+    assert "Risk score" in analyzed.reports.technical
     assert "Executive Brief" in analyzed.reports.executive

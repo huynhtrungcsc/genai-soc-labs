@@ -19,6 +19,7 @@ def test_vietnamese_finance_foreign_question_generates_splunk_query() -> None:
     assert 'country!="VN"' in generated.query
     assert "department=finance" in generated.query
     assert "action IN" in generated.query
+    assert generated.risk_level == "low"
     assert generated.next_questions
 
 
@@ -48,3 +49,4 @@ def test_long_range_emits_warning() -> None:
     )
 
     assert any(item.severity == "warning" for item in generated.validations)
+    assert generated.requires_review is True

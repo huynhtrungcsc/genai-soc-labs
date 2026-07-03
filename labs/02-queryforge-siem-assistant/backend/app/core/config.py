@@ -9,6 +9,7 @@ class Settings:
     database_path: Path = Path(getenv("QUERYFORGE_DATABASE_PATH", "./data/queryforge.db"))
     demo_username: str = getenv("QUERYFORGE_DEMO_USERNAME", "hunter")
     demo_password: str = getenv("QUERYFORGE_DEMO_PASSWORD", "queryforge-demo")
+    api_key: str = getenv("QUERYFORGE_API_KEY", "change-me-in-production")
 
 
 @lru_cache

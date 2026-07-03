@@ -9,6 +9,7 @@ class Settings:
     database_path: Path = Path(getenv("INCIDENTLENS_DATABASE_PATH", "./data/incidentlens.db"))
     demo_username: str = getenv("INCIDENTLENS_DEMO_USERNAME", "analyst")
     demo_password: str = getenv("INCIDENTLENS_DEMO_PASSWORD", "incidentlens-demo")
+    api_key: str = getenv("INCIDENTLENS_API_KEY", "change-me-in-production")
 
 
 @lru_cache

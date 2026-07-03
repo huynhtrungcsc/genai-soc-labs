@@ -14,6 +14,9 @@ def generate_query(payload: QueryRequest) -> GeneratedQuery:
         assumptions=_assumptions(payload, department),
         validations=validations,
         next_questions=_next_questions(intents),
+        risk_level=_risk_level(payload, len(intents)),
+        estimated_cost=_estimated_cost(payload, len(intents)),
+        requires_review=_requires_review(payload, len(intents)),
     )
 
 
@@ -104,6 +107,13 @@ def _validate(payload: QueryRequest, intents: list[Intent]) -> list[ValidationMe
                 message="Long time range may be expensive. Consider narrowing scope during triage.",
             )
         )
+    if payload.max_rows > 1000:
+        messages.append(
+            ValidationMessage(
+                severity="warning",
+                message="Large result limit may expose too much data. Confirm business need.",
+            )
+        )
     if len(intents) > 2:
         messages.append(
             ValidationMessage(
@@ -150,3 +160,23 @@ def _next_questions(intents: list[Intent]) -> list[str]:
 
 def _kql_time(time_range: str) -> str:
     return {"15m": "15m", "1h": "1h", "24h": "24h", "7d": "7d", "30d": "30d"}[time_range]
+
+
+def _risk_level(payload: QueryRequest, intent_count: int) -> str:
+    if payload.time_range == "30d" or payload.max_rows > 1000 or intent_count > 2:
+        return "high"
+    if payload.time_range == "7d" or payload.max_rows > 500:
+        return "medium"
+    return "low"
+
+
+def _estimated_cost(payload: QueryRequest, intent_count: int) -> str:
+    if payload.time_range in {"15m", "1h"} and intent_count <= 1:
+        return "low - narrow time window and focused predicate"
+    if payload.time_range in {"24h", "7d"}:
+        return "medium - validate index/table size before production execution"
+    return "high - long lookback window can be expensive in production SIEM"
+
+
+def _requires_review(payload: QueryRequest, intent_count: int) -> bool:
+    return payload.time_range in {"7d", "30d"} or payload.max_rows > 1000 or intent_count > 2

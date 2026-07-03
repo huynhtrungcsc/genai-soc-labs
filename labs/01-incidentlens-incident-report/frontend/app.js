@@ -44,9 +44,10 @@ function renderIncident(incident) {
   state.incident = incident;
   $("event-count").textContent = incident.events.length;
   $("mitre-count").textContent = incident.mitre.length;
-  $("severity-label").textContent = incident.severity.toUpperCase();
+  $("risk-label").textContent = incident.risk ? `${incident.risk.score}` : "-";
   renderTimeline(incident.timeline);
   renderMitre(incident.mitre);
+  renderRisk(incident);
   $("technical").textContent = incident.reports?.technical || "";
   $("executive").textContent = incident.reports?.executive || "";
 }
@@ -87,6 +88,37 @@ function renderMitre(items) {
     : "<p>No MITRE mapping available.</p>";
 }
 
+function renderRisk(incident) {
+  const risk = incident.risk;
+  const quality = incident.data_quality || [];
+  const tasks = incident.response_tasks || [];
+  $("risk").innerHTML = `
+    <article class="card">
+      <span class="pill">${escapeHtml(incident.status || "new")}</span>
+      <h3>${risk ? `${risk.score}/100 · ${risk.level.toUpperCase()}` : "Risk not assessed"}</h3>
+      <p><strong>Owner:</strong> ${escapeHtml(incident.owner || "unassigned")}</p>
+      <p><strong>SLA:</strong> ${escapeHtml(risk?.recommended_sla || "not assessed")}</p>
+      <ul>${(risk?.drivers || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+    </article>
+    <article class="card">
+      <span class="pill">Data Quality</span>
+      <ul>${
+        quality.length
+          ? quality.map((item) => `<li>${escapeHtml(item.severity)} · ${escapeHtml(item.field)}: ${escapeHtml(item.message)}</li>`).join("")
+          : "<li>No data quality issues identified.</li>"
+      }</ul>
+    </article>
+    <article class="card">
+      <span class="pill">Response Plan</span>
+      <ul>${
+        tasks.length
+          ? tasks.map((task) => `<li><strong>${escapeHtml(task.title)}</strong> · ${escapeHtml(task.owner_role)} · ${escapeHtml(task.status)}</li>`).join("")
+          : "<li>No response tasks generated.</li>"
+      }</ul>
+    </article>
+  `;
+}
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (char) => {
     const entities = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
@@ -124,6 +156,13 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({
           title: $("title").value,
           severity: $("severity").value,
+          owner: $("owner").value,
+          affected_assets: $("affected_assets").value
+            .split(",")
+            .map((item) => item.trim())
+            .filter(Boolean),
+          business_impact: $("business_impact").value,
+          tags: ["soc", "incident-response"],
           summary: $("summary").value,
           raw_logs: $("raw_logs").value,
         }),
