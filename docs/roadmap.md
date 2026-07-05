@@ -11,9 +11,9 @@
 
 Priority labs:
 
-1. IncidentLens: AI Incident Report Assistant
-2. QueryForge: Natural Language SIEM Assistant
-3. ThreatPulse: AI Threat Intelligence Briefing
+1. IncidentLens: AI Incident Report Assistant - implemented
+2. QueryForge: Natural Language SIEM Assistant - implemented
+3. ThreatPulse: AI Threat Intelligence Briefing - implemented
 4. PlaybookOps: SOAR Response Assistant
 5. NetBeacon: C2 & Exfiltration Detection
 6. ForensicTrace: Investigation Timeline Builder

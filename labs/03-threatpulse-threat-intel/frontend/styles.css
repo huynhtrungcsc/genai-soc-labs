@@ -1,0 +1,264 @@
+:root {
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #111827;
+  --muted: #5b6472;
+  --line: #d9dee7;
+  --accent: #0f766e;
+  --accent-strong: #115e59;
+  --danger: #b42318;
+  --warn: #b54708;
+  --ok: #027a48;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.session {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-strong);
+}
+
+.layout {
+  width: min(1440px, calc(100% - 48px));
+  margin: 24px auto 40px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.summary-grid article {
+  padding: 18px;
+  border-right: 1px solid var(--line);
+}
+
+.summary-grid article:last-child {
+  border-right: 0;
+}
+
+.metric-label {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.summary-grid strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 28px;
+}
+
+.workbench {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.95fr) minmax(420px, 1.35fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.workbench.lower {
+  grid-template-columns: 1fr 1fr;
+}
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel-head span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  max-height: 560px;
+  overflow: auto;
+}
+
+.item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 13px;
+  background: #ffffff;
+}
+
+.item h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.item p,
+.briefing p {
+  margin-bottom: 8px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.meta,
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  color: #334155;
+  font-size: 12px;
+  background: #f8fafc;
+}
+
+.critical {
+  color: var(--danger);
+  border-color: #f1aaa5;
+  background: #fff4f2;
+}
+
+.high {
+  color: var(--warn);
+  border-color: #fedf89;
+  background: #fffaeb;
+}
+
+.medium {
+  color: #175cd3;
+  border-color: #b2ccff;
+  background: #eff4ff;
+}
+
+.low {
+  color: var(--ok);
+  border-color: #abefc6;
+  background: #ecfdf3;
+}
+
+.briefing-empty,
+.briefing {
+  padding: 16px 18px;
+}
+
+.briefing section {
+  border-top: 1px solid var(--line);
+  padding: 14px 0;
+}
+
+.briefing section:first-of-type {
+  border-top: 0;
+}
+
+.briefing ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+.compact {
+  max-height: 360px;
+}
+
+@media (max-width: 980px) {
+  .topbar,
+  .session {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .layout {
+    width: min(100% - 24px, 720px);
+  }
+
+  .summary-grid,
+  .workbench,
+  .workbench.lower {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-grid article {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .summary-grid article:last-child {
+    border-bottom: 0;
+  }
+}

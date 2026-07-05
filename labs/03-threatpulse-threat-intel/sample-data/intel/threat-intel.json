@@ -1,0 +1,50 @@
+[
+  {
+    "source": "CISA KEV",
+    "title": "Active exploitation reported for Ivanti Connect Secure gateway vulnerability",
+    "summary": "Multiple organizations reported exploitation attempts against exposed Ivanti Connect Secure appliances. Successful exploitation may allow initial access to remote access infrastructure.",
+    "affected_products": ["Ivanti Connect Secure"],
+    "industries": ["financial-services", "technology"],
+    "cves": ["CVE-2025-0282"],
+    "iocs": ["198.51.100.77", "vpn-check.jsp"],
+    "mitre_techniques": ["T1190", "T1133"],
+    "references": ["https://www.cisa.gov/known-exploited-vulnerabilities-catalog"],
+    "observed_exploitation": true,
+    "severity": "critical",
+    "confidence": "high",
+    "source_reliability": "A",
+    "published_at": "2026-07-01T09:30:00+00:00"
+  },
+  {
+    "source": "Vendor Advisory",
+    "title": "MOVEit Transfer patch advisory for managed file transfer deployments",
+    "summary": "Vendor advisory describes a vulnerability affecting managed file transfer deployments. Organizations should review exposure, apply fixed versions, and inspect recent file transfer activity.",
+    "affected_products": ["MOVEit Transfer"],
+    "industries": ["financial-services", "healthcare"],
+    "cves": ["CVE-2026-41001"],
+    "iocs": ["fileupload.aspx", "203.0.113.44"],
+    "mitre_techniques": ["T1190", "T1041"],
+    "references": ["https://example.com/vendor/moveit-advisory"],
+    "observed_exploitation": false,
+    "severity": "high",
+    "confidence": "medium",
+    "source_reliability": "B",
+    "published_at": "2026-07-02T15:10:00+00:00"
+  },
+  {
+    "source": "Security Research Blog",
+    "title": "Apache Struts exploit attempts observed against internet-facing Java applications",
+    "summary": "Researchers observed scanning and exploit attempts against vulnerable Apache Struts applications. Publicly exposed applications with sensitive data should be reviewed first.",
+    "affected_products": ["Apache Struts"],
+    "industries": ["financial-services", "retail"],
+    "cves": ["CVE-2026-23010"],
+    "iocs": ["struts2-showcase.action", "192.0.2.91"],
+    "mitre_techniques": ["T1190", "T1059"],
+    "references": ["https://example.com/research/struts-exploitation"],
+    "observed_exploitation": true,
+    "severity": "critical",
+    "confidence": "high",
+    "source_reliability": "B",
+    "published_at": "2026-07-03T06:45:00+00:00"
+  }
+]

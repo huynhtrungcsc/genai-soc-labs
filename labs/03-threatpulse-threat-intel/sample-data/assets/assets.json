@@ -1,0 +1,46 @@
+[
+  {
+    "hostname": "pay-api-prod-01",
+    "owner": "payments-platform",
+    "business_unit": "digital-banking",
+    "environment": "production",
+    "criticality": 5,
+    "technologies": ["Apache Struts", "Java 17", "PostgreSQL"],
+    "internet_exposed": true,
+    "data_classification": "restricted",
+    "tags": ["crown-jewel", "pci"]
+  },
+  {
+    "hostname": "idp-prod-02",
+    "owner": "identity-platform",
+    "business_unit": "security-engineering",
+    "environment": "production",
+    "criticality": 5,
+    "technologies": ["Okta Agent", "Nginx", "Ubuntu"],
+    "internet_exposed": true,
+    "data_classification": "confidential",
+    "tags": ["identity", "sso"]
+  },
+  {
+    "hostname": "crm-app-03",
+    "owner": "customer-operations",
+    "business_unit": "operations",
+    "environment": "production",
+    "criticality": 4,
+    "technologies": ["MOVEit Transfer", "Windows Server", "Microsoft SQL Server"],
+    "internet_exposed": false,
+    "data_classification": "confidential",
+    "tags": ["customer-data"]
+  },
+  {
+    "hostname": "vpn-edge-01",
+    "owner": "network-security",
+    "business_unit": "infrastructure",
+    "environment": "production",
+    "criticality": 5,
+    "technologies": ["Ivanti Connect Secure", "Linux"],
+    "internet_exposed": true,
+    "data_classification": "internal",
+    "tags": ["remote-access", "edge"]
+  }
+]

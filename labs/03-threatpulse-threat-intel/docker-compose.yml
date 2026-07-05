@@ -1,0 +1,16 @@
+services:
+  threatpulse:
+    build: .
+    ports:
+      - "8003:8003"
+    environment:
+      THREATPULSE_API_KEY: change-me-in-production
+      THREATPULSE_DEMO_USERNAME: analyst
+      THREATPULSE_DEMO_PASSWORD: threatpulse-demo
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8003/api/health')"]
+      interval: 20s
+      timeout: 5s
+      retries: 5

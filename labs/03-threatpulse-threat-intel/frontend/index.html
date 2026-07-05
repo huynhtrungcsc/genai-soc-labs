@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ThreatPulse</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Threat Intelligence Operations</p>
+        <h1>ThreatPulse</h1>
+      </div>
+      <div class="session">
+        <span id="health">Checking service</span>
+        <button id="seedBtn" type="button">Load Sample</button>
+        <button id="briefBtn" type="button">Generate Briefing</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel summary-grid" aria-label="Operational summary">
+        <article>
+          <span class="metric-label">Assets</span>
+          <strong id="assetCount">0</strong>
+        </article>
+        <article>
+          <span class="metric-label">Intel Items</span>
+          <strong id="intelCount">0</strong>
+        </article>
+        <article>
+          <span class="metric-label">Critical / High</span>
+          <strong id="priorityCount">0</strong>
+        </article>
+        <article>
+          <span class="metric-label">Open Briefings</span>
+          <strong id="briefingCount">0</strong>
+        </article>
+      </section>
+
+      <section class="workbench">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Intel Queue</h2>
+            <span>Prioritized by asset relevance</span>
+          </div>
+          <div id="intelList" class="list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Latest Briefing</h2>
+            <span>Draft requires human approval</span>
+          </div>
+          <div id="briefingView" class="briefing-empty">No briefing generated yet.</div>
+        </div>
+      </section>
+
+      <section class="workbench lower">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Asset Exposure</h2>
+            <span>Inventory used for matching</span>
+          </div>
+          <div id="assetList" class="list compact"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Audit Trail</h2>
+            <span>Governance events</span>
+          </div>
+          <div id="auditList" class="list compact"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
